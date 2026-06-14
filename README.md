@@ -6,7 +6,7 @@
 #### App screenshot:
 <img src="screenshot1.png" alt="ThreeDice Screenshot" width="500">
 
-A web-based dice betting game built with Spring Boot 3, PostgreSQL, and Java 21.
+A web-based dice betting game built with Spring Boot 3, PostgreSQL, and Java 25.
 
 Players bet on predicting the product of three six-sided dice. If the prediction matches the rolled product, the player wins their stake multiplied by the applicable odds.
 
@@ -35,7 +35,7 @@ These multipliers include a ~5–10% house edge over mathematically fair payouts
 
 ## Prerequisites
 
-- **Java 21**
+- **Java 25**
 - **Docker** (for PostgreSQL or for Testcontainers during tests)
 - **Maven 3.9+**
 
@@ -49,7 +49,7 @@ docker compose up -d
 
 This starts a PostgreSQL 16 instance on port `5432` with database `threedice`.
 
-### 2. Run the application (maven and Java 21 required on PATH)
+### 2. Run the application (maven and Java 25 required on PATH)
 
 ```bash
 mvn spring-boot:run
@@ -198,7 +198,7 @@ src/test/java/          # Integration tests (Testcontainers + REST Assured)
 
 ## Tech Stack
 
-- Java 21
+- Java 25
 - Spring Boot 3.4
 - Maven
 - Spring Data JPA / Hibernate

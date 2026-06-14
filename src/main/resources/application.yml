@@ -3,9 +3,9 @@ spring:
     name: threedice
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/threedice
-    username: threedice
-    password: threedice
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/threedice}
+    username: ${SPRING_DATASOURCE_USERNAME:threedice}
+    password: ${SPRING_DATASOURCE_PASSWORD:threedice}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -21,8 +21,8 @@ spring:
     locations: classpath:db/migration
 
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 
 # Game configuration
 game:
-  initial-balance: 1000.00
+  initial-balance: ${GAME_INITIAL_BALANCE:1000.00}
