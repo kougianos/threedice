@@ -6,9 +6,55 @@
 #### App screenshot:
 <img src="screenshot1.png" alt="ThreeDice Screenshot" width="500">
 
-A web-based dice betting game built with Spring Boot 3, PostgreSQL, and Java 21.
+A web-based dice betting game, implemented **twice** — once in Spring Boot and once in Go — against the same
+requirements, the same business logic, the same REST contract and the same frontend.
 
-Players bet on predicting the product of three six-sided dice. If the prediction matches the rolled product, the player wins their stake multiplied by the applicable odds.
+Players bet on predicting the product of three six-sided dice. If the prediction matches the rolled product, the
+player wins their stake multiplied by the applicable odds.
+
+## The two implementations
+
+| | [`spring-boot/`](spring-boot/) | [`go/`](go/) |
+|---|---|---|
+| Language | Java 21 | Go 1.26 |
+| HTTP | Spring MVC | chi + net/http |
+| Persistence | Spring Data JPA / Hibernate | sqlc over pgx |
+| Money | `BigDecimal` | shopspring/decimal |
+| Validation | Jakarta Bean Validation | go-playground/validator |
+| Migrations | Flyway | golang-migrate |
+| Logging | SLF4J / Logback | log/slog |
+| Errors | `ProblemDetail` (RFC 7807) | hand-rolled RFC 7807 |
+| Tests | Testcontainers + REST Assured | testcontainers-go + testify |
+| Frontend | served from `resources/static` | same files, embedded via `embed.FS` |
+| Database | `threedice` | `threedice_go` |
+| Port | 8080 | 8081 |
+
+Both own their schema independently, so either can be run on its own against an empty database.
+
+See [`spring-boot/README.md`](spring-boot/README.md) and [`go/README.md`](go/README.md) for building, running and
+deploying each one.
+
+## Quick start
+
+```bash
+docker compose up --build
+```
+
+That starts PostgreSQL 16 (creating both databases), then builds and runs both services:
+
+- Spring Boot → [http://localhost:8080](http://localhost:8080)
+- Go → [http://localhost:8081](http://localhost:8081)
+
+Each seeds its own demo player (`id=1`, balance `1000.00`) on first startup and serves the frontend at `/`.
+
+> **Existing volume?** The `threedice_go` database is created by `docker/init-db.sh`, which PostgreSQL only runs
+> when the data volume is first initialised. If you already have a `pgdata` volume from an earlier version, either
+> `docker compose down -v` (destroys data) or create it by hand:
+> ```bash
+> docker compose exec postgres psql -U threedice -d threedice -c 'CREATE DATABASE threedice_go OWNER threedice;'
+> ```
+
+To run just the database and start a service yourself, `docker compose up -d postgres`.
 
 ## Odds Table
 
@@ -33,41 +79,9 @@ A more balanced alternative with finer-grained ranges, accounting for actual pro
 
 These multipliers include a ~5–10% house edge over mathematically fair payouts.
 
-## Prerequisites
-
-- **Java 21**
-- **Docker** (for PostgreSQL or for Testcontainers during tests)
-- **Maven 3.9+**
-
-## Getting Started
-
-### 1. Start the database
-
-```bash
-docker compose up -d
-```
-
-This starts a PostgreSQL 16 instance on port `5432` with database `threedice`.
-
-### 2. Run the application (maven and Java 21 required on PATH)
-
-```bash
-mvn spring-boot:run
-```
-
-The application starts on `http://localhost:8080`. Flyway automatically creates the schema, and a demo player (`id=1`, balance `1000.00`) is seeded on first startup.
-
-The **frontend** is served automatically at [http://localhost:8080](http://localhost:8080)
-
-### 3. Run the tests
-
-Tests use **Testcontainers** - they spin up their own PostgreSQL container automatically. You only need Docker running.
-
-```bash
-mvn clean test
-```
-
 ## API Reference
+
+Both services expose exactly this contract.
 
 ### Place a Bet
 
@@ -78,7 +92,8 @@ Content-Type: application/json
 {
     "playerId": 1,
     "stake": 10.00,
-    "predictedValue": 12
+    "predictedValue": 12,
+    "idempotencyKey": "b1f3c8e2-..."
 }
 ```
 
@@ -155,32 +170,32 @@ GET /api/transactions/history/{playerId}
 ]
 ```
 
-## Project Structure
+### Errors
 
+Both services return RFC 7807 `application/problem+json`:
+
+```json
+{
+    "type": "about:blank",
+    "title": "Not Found",
+    "status": 404,
+    "detail": "Player not found with ID: 99999",
+    "instance": "/api/players/99999"
+}
 ```
-src/main/java/com/casino/threedice/
-├── controller/         # REST controllers (BetController, PlayerController, TransactionController)
-├── dto/                # Request/response records
-├── entity/             # JPA entities (Client, Bet, Draw, Transaction)
-├── exception/          # Custom exceptions & global handler
-├── repository/         # Spring Data JPA repositories
-├── service/            # Business logic (BetService, PlayerService, TransactionService, DiceEngine)
-├── validation/         # Custom Jakarta validation (ValidPredictedValue)
-└── ThreeDiceApplication.java
 
-src/main/resources/
-├── static/             # Frontend (HTML, CSS, JS)
-├── application.yml
-└── db/migration/       # Flyway SQL migrations
-
-src/test/java/          # Integration tests (Testcontainers + REST Assured)
-```
+| Status | When |
+|--------|------|
+| 400 | Validation failure, insufficient balance, unparseable body or path variable |
+| 404 | Unknown player or unmapped route |
+| 405 | Known route, wrong verb |
+| 409 | Duplicate `idempotencyKey` |
 
 ## Features
 
 - **Idempotent Bet Placement**: Each bet request carries a unique idempotency key. Duplicate submissions are detected and rejected with a `409 Conflict`, preventing accidental double-charges.
 
-- **Input Validation**: Requests are validated using Jakarta Bean Validation annotations. Stake must be between $1 and $10,000, and the predicted value must be a mathematically possible product of three dice (only 40 out of 216 values are valid). Invalid requests return a `400 Bad Request` with a descriptive error message.
+- **Input Validation**: Stake must be between $1 and $10,000, and the predicted value must be a mathematically possible product of three dice (only 40 out of 216 values are valid). Invalid requests return a `400 Bad Request` with a descriptive error message.
 
 - **Pessimistic Locking on Balance**: Player balance reads use `SELECT ... FOR UPDATE` to prevent concurrent bets from reading stale balances. This ensures correctness under concurrent load.
 
@@ -188,24 +203,26 @@ src/test/java/          # Integration tests (Testcontainers + REST Assured)
 
 - **Quick Pick & Quick Stake Buttons**: The frontend provides popular predicted values (with win probabilities) and stake increment buttons for faster gameplay without manual input.
 
-- **Secure Dice Rolling**: Dice are rolled using `java.security.SecureRandom`, ensuring cryptographically unpredictable outcomes .
+- **Secure Dice Rolling**: Dice are rolled from a cryptographically secure source (`java.security.SecureRandom` / `crypto/rand`), ensuring unpredictable outcomes.
 
 - **Transaction Audit Trail**: Every bet generates a corresponding ledger entry (DEBIT on loss, CREDIT on win) with a `balanceAfter` snapshot, exposed via a dedicated history endpoint.
 
 - **Database-Level Constraints**: PostgreSQL CHECK constraints enforce die values (1–6), bet status (WON/LOST), and transaction type (DEBIT/CREDIT) as a defense-in-depth layer beyond application validation.
 
-- **Integration Tests with Deterministic Dice**: Tests use `@MockitoBean` on `DiceEngine` to control outcomes deterministically, running against a real PostgreSQL via Testcontainers.
+- **Integration Tests with Deterministic Dice**: Both suites inject a scripted dice source to control outcomes deterministically, running against a real PostgreSQL via Testcontainers. 29 tests each, case for case.
 
-## Tech Stack
+## Known differences between the two services
 
-- Java 21
-- Spring Boot 3.4
-- Maven
-- Spring Data JPA / Hibernate
-- PostgreSQL 16
-- Flyway (schema migration)
-- Lombok
-- Testcontainers + REST Assured (integration testing)
+The APIs were diffed response-by-response; 22 of 23 error and validation cases are byte-identical. The
+remainder are deliberate:
+
+- **Money always renders at 2dp in Go.** `BigDecimal` carries the scale of whatever it was built from, so Java
+  answers a `"stake": 10` request with `"winnings": 50` but a `"stake": 10.00` request with `"winnings": 50.00`,
+  and a loss with `"winnings": 0`. Go always emits `50.00` / `0.00`. Every value read from the database is 2dp in
+  both. The same applies inside the insufficient-balance message.
+- **`createdAt` within a single bet.** Java stamps each entity with `Instant.now()`, so a bet and its transaction
+  differ by a few hundred microseconds. Go lets PostgreSQL default the column, and `now()` is the transaction
+  timestamp, so both rows share one value. Ordering across bets is unaffected.
 
 ## Further improvements that could be delivered in future iterations
 
@@ -214,3 +231,4 @@ src/test/java/          # Integration tests (Testcontainers + REST Assured)
 - Add cache layer for hot data.
 - Add sign up / login flows and authenticate bets with JWT through spring security.
 - Add some animations and assets (eg rolling dice) on the client side and improve UX.
+- The frontend is duplicated in both services; a shared build step would stop the two copies drifting apart.

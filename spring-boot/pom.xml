@@ -19,6 +19,9 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Overrides the Spring Boot BOM's 1.20.5, whose docker-java client cannot
+             negotiate with Docker Engine 29+ (MinAPIVersion 1.40). -->
+        <testcontainers.version>1.21.4</testcontainers.version>
     </properties>
 
     <dependencies>

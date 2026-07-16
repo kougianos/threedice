@@ -1,0 +1,12 @@
+# This repo is developed on Windows with core.autocrlf=true, but some files are
+# consumed inside Linux containers or by tooling that requires LF. Without this,
+# a fresh clone checks them out with CRLF and they break.
+
+# init-db.sh runs in the postgres container; a CRLF shebang is a bad interpreter.
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+
+# gofmt and go vet expect LF; CRLF makes every file report as unformatted.
+*.go        text eol=lf
+go.mod      text eol=lf
+go.sum      text eol=lf

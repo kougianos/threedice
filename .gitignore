@@ -1,5 +1,12 @@
 # IDE
 .idea
 *.iml
+
+# Java
 target
+
+# Go
+/go/server
+*.exe
+
 requirements.txt
