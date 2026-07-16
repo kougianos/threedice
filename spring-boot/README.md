@@ -103,6 +103,12 @@ Create an application pointing at this repository:
 Coolify sets the build context to the Base Directory, so the Dockerfile here is self-contained — it only copies
 `pom.xml` and `src`.
 
+> **Base Directory must be `/spring-boot`, not `/`.** `Dockerfile Location` is resolved relative to it, so
+> `Base Directory: /` + `Dockerfile Location: /spring-boot/Dockerfile` finds the file but builds it with the
+> repo root as context, and `COPY src ./src` then fails with `"/src": not found`. Coolify also injects every
+> environment variable as a build `ARG`, so expect a `SecretsUsedInArgOrEnv` lint warning for the datasource
+> password; it is harmless, and unticking "Build Variable?" on those variables silences it.
+
 Set these environment variables to point at your PostgreSQL service:
 
 ```

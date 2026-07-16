@@ -139,6 +139,10 @@ Create a **second** application pointing at this repository, alongside the Sprin
 
 Coolify sets the build context to the Base Directory, so the Dockerfile here is self-contained.
 
+> **Base Directory must be `/go`, not `/`.** `Dockerfile Location` is resolved relative to it, so
+> `Base Directory: /` + `Dockerfile Location: /go/Dockerfile` finds the file but builds it with the repo root as
+> context, and the `COPY go.mod go.sum ./` then fails.
+
 Both services share one PostgreSQL instance but own separate databases. Coolify will not create the second one,
 so run this once against your existing instance:
 
