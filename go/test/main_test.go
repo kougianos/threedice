@@ -34,7 +34,13 @@ var (
 	srv    *httptest.Server
 	pool   *pgxpool.Pool
 	roller = &stubRoller{}
+
+	// containerDSN points at containerDB; the migration tests derive URLs for
+	// their own throwaway databases from it.
+	containerDSN string
 )
+
+const containerDB = "threedice_test"
 
 func TestMain(m *testing.M) {
 	os.Exit(run(m))
@@ -44,7 +50,7 @@ func run(m *testing.M) int {
 	ctx := context.Background()
 
 	container, err := tcpostgres.Run(ctx, "postgres:16-alpine",
-		tcpostgres.WithDatabase("threedice_test"),
+		tcpostgres.WithDatabase(containerDB),
 		tcpostgres.WithUsername("test"),
 		tcpostgres.WithPassword("test"),
 		testcontainers.WithWaitStrategy(
@@ -64,6 +70,7 @@ func run(m *testing.M) int {
 		fmt.Fprintln(os.Stderr, "connection string:", err)
 		return 1
 	}
+	containerDSN = dsn
 
 	// Quiet logs so test output stays readable.
 	log := slog.New(slog.NewTextHandler(io.Discard, nil))

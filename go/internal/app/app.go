@@ -27,7 +27,7 @@ type App struct {
 // New migrates the schema, opens the pool, seeds the demo player and builds the
 // router.
 func New(ctx context.Context, cfg config.Config, roller domain.Roller, log *slog.Logger) (*App, error) {
-	if err := migrate.Up(threedice.Migrations(), cfg.DatabaseURL, log); err != nil {
+	if err := migrate.Up(ctx, threedice.Migrations(), cfg.DatabaseURL, log); err != nil {
 		return nil, err
 	}
 

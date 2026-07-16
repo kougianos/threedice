@@ -156,3 +156,28 @@ Then set:
 DATABASE_URL=postgres://<user>:<password>@<postgres-host>:5432/threedice_go?sslmode=disable
 PORT=8081
 ```
+
+### Switching an existing Spring Boot deployment to Go in place
+
+To point an existing Coolify application at Go instead — keeping its domain, its database and its data — change
+these three things. Changing the Base Directory alone is not enough.
+
+| Setting | From | To |
+|---|---|---|
+| Base Directory | `/spring-boot` | `/go` |
+| *(env)* `PORT` | — | `8080` |
+| *(env)* `DATABASE_URL` | — | `postgres://<user>:<pass>@<host>:5432/threedice?sslmode=disable` |
+
+- **`PORT`** matters because this service defaults to 8081 while the Spring application is exposed on 8080. Setting
+  it leaves Coolify's `Ports Exposes`, domain and proxy config untouched.
+- **`DATABASE_URL`** is required even though the credentials already exist: `SPRING_DATASOURCE_URL` is a JDBC URL
+  under a different name, and this service will not read it. Point it at the same `threedice` database. The old
+  `SPRING_DATASOURCE_*` variables become unused and can be removed.
+- **The schema is adopted automatically.** That database is Flyway-managed, and golang-migrate would otherwise try
+  to recreate the tables and fail on startup — see `adoptFlywaySchema` in `internal/migrate`. Existing players,
+  balances and history are left untouched; seeding only runs when `clients` is empty.
+
+Flyway's history table is left in place, so switching the Base Directory back to `/spring-boot` rolls the
+deployment back. That holds as long as the schema has not moved on — a migration applied only by golang-migrate
+would be invisible to Flyway, and Hibernate's `ddl-auto: validate` would reject a schema that no longer matches
+its entities.
