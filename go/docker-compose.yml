@@ -13,13 +13,6 @@
 # image after, so the service shows up as "threedice-go" on Beszel instead of a
 # random UUID. Enable Configuration > Advanced > "Consistent Container Names" to
 # also drop the trailing UUID and get exactly "threedice-go".
-#
-# The domain is assigned to this service in the Coolify UI (the service's Domains
-# field), as https://<your-domain>:8081 — the :8081 tells Coolify which container
-# port to route to; the public URL stays on 80/443. A custom domain is a UI
-# setting, not a SERVICE_FQDN_* variable: those are only for Coolify's
-# auto-generated wildcard subdomains, and mixing the two produces a duplicate
-# domain and an extra TLS certificate.
 services:
   threedice-go:
     build:
@@ -28,6 +21,9 @@ services:
     image: threedice-go:latest
     restart: unless-stopped
     environment:
+      # Coolify routes the service's domain to port 8081. Set this variable to
+      # your own URL in the Coolify UI to use a custom domain.
+      - SERVICE_FQDN_THREEDICE-GO_8081
       - PORT=8081
       - DATABASE_URL=${DATABASE_URL}
       - INITIAL_BALANCE=${INITIAL_BALANCE:-1000.00}
