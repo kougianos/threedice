@@ -6,10 +6,6 @@
 *.sh        text eol=lf
 Dockerfile  text eol=lf
 
-# Compose files are parsed by Docker / Coolify on Linux.
-*.yml       text eol=lf
-*.yaml      text eol=lf
-
 # gofmt and go vet expect LF; CRLF makes every file report as unformatted.
 *.go        text eol=lf
 go.mod      text eol=lf

@@ -128,52 +128,56 @@ Two known differences remain, both deliberate — see the root README.
 
 ## Deploying to Coolify
 
-Deployed as a **Docker Compose** application. [`docker-compose.yml`](docker-compose.yml) in this directory builds the
-Dockerfile here and runs the single `threedice-go` service. It is separate from the root
-[`docker-compose.yml`](../docker-compose.yml), which is the local-development stack (PostgreSQL + both services) and
-is not used by Coolify.
+Create a **second** application pointing at this repository, alongside the Spring one:
 
 | Setting | Value |
 |---|---|
-| Build Pack | `Docker Compose` |
+| Build Pack | `Dockerfile` |
 | Base Directory | `/go` |
-| Docker Compose Location | `/docker-compose.yml` |
+| Dockerfile Location | `/Dockerfile` |
+| Ports Exposes | `8081` |
 
-> **Base Directory must be `/go`, not `/`.** The compose file's `build.context: .` resolves relative to the file, so
-> the build context is `/go` and the Dockerfile's `COPY go.mod go.sum ./` finds them. With `Base Directory: /`,
-> Coolify would build against the repo root and that copy fails.
+Coolify sets the build context to the Base Directory, so the Dockerfile here is self-contained.
 
-### Why compose: meaningful names
+> **Base Directory must be `/go`, not `/`.** `Dockerfile Location` is resolved relative to it, so
+> `Base Directory: /` + `Dockerfile Location: /go/Dockerfile` finds the file but builds it with the repo root as
+> context, and the `COPY go.mod go.sum ./` then fails.
 
-Coolify names the container and image after the compose **service key**, so the service shows up as `threedice-go`
-on Beszel (and `docker ps`) instead of the random UUID the `Dockerfile` build pack produces. To also drop the UUID
-suffix Coolify appends by default and get exactly `threedice-go`, enable **Configuration > Advanced > "Consistent
-Container Names"** — this stops the old container before starting the new one (no rolling update), which is fine for
-a single-instance service.
-
-Do **not** add a `ports:` mapping. Coolify publishes the service through its own proxy, and a host port mapping
-collides with it (`port is already allocated`). The `SERVICE_FQDN_THREEDICE-GO_8081` variable in the compose file
-tells Coolify to route the service's domain to port 8081; set it to your URL in the Coolify UI for a custom domain.
-
-### Database
-
-Both services share one PostgreSQL instance but own separate databases. Coolify will not create the Go one, so run
-this once against your existing instance:
+Both services share one PostgreSQL instance but own separate databases. Coolify will not create the second one,
+so run this once against your existing instance:
 
 ```sql
 CREATE DATABASE threedice_go OWNER threedice;
 ```
 
-Then set `DATABASE_URL` in the Coolify UI:
+Then set:
 
 ```
 DATABASE_URL=postgres://<user>:<password>@<postgres-host>:5432/threedice_go?sslmode=disable
+PORT=8081
 ```
 
-`PORT` (8081) is fixed in the compose file and matches the port the domain is routed to; `INITIAL_BALANCE` defaults
-to `1000.00` and can be overridden in the UI.
+### Switching an existing Spring Boot deployment to Go in place
 
-> **Pointing at an existing Spring `threedice` database instead?** Set `DATABASE_URL` to it (`…/threedice`, not
-> `threedice_go`). That database is Flyway-managed, and golang-migrate adopts the existing schema on startup rather
-> than recreating it — see `adoptFlywaySchema` in `internal/migrate`. Existing players, balances and history are
-> left untouched; seeding only runs when `clients` is empty.
+To point an existing Coolify application at Go instead — keeping its domain, its database and its data — change
+these three things. Changing the Base Directory alone is not enough.
+
+| Setting | From | To |
+|---|---|---|
+| Base Directory | `/spring-boot` | `/go` |
+| *(env)* `PORT` | — | `8080` |
+| *(env)* `DATABASE_URL` | — | `postgres://<user>:<pass>@<host>:5432/threedice?sslmode=disable` |
+
+- **`PORT`** matters because this service defaults to 8081 while the Spring application is exposed on 8080. Setting
+  it leaves Coolify's `Ports Exposes`, domain and proxy config untouched.
+- **`DATABASE_URL`** is required even though the credentials already exist: `SPRING_DATASOURCE_URL` is a JDBC URL
+  under a different name, and this service will not read it. Point it at the same `threedice` database. The old
+  `SPRING_DATASOURCE_*` variables become unused and can be removed.
+- **The schema is adopted automatically.** That database is Flyway-managed, and golang-migrate would otherwise try
+  to recreate the tables and fail on startup — see `adoptFlywaySchema` in `internal/migrate`. Existing players,
+  balances and history are left untouched; seeding only runs when `clients` is empty.
+
+Flyway's history table is left in place, so switching the Base Directory back to `/spring-boot` rolls the
+deployment back. That holds as long as the schema has not moved on — a migration applied only by golang-migrate
+would be invisible to Flyway, and Hibernate's `ddl-auto: validate` would reject a schema that no longer matches
+its entities.
