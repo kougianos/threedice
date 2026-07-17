@@ -152,8 +152,17 @@ Container Names"** — this stops the old container before starting the new one 
 a single-instance service.
 
 Do **not** add a `ports:` mapping. Coolify publishes the service through its own proxy, and a host port mapping
-collides with it (`port is already allocated`). The `SERVICE_FQDN_THREEDICE-GO_8081` variable in the compose file
-tells Coolify to route the service's domain to port 8081; set it to your URL in the Coolify UI for a custom domain.
+collides with it (`port is already allocated`).
+
+### Domain
+
+Assign the domain to the `threedice-go` service in Coolify's **Domains** field (on the service, once the compose is
+loaded) as `https://<your-domain>:8081`. The `:8081` selects which container port to route to; the public URL stays
+on 80/443. Enter it before rebuilding — switching build pack clears the old application-level domain and its Traefik
+labels, and Coolify regenerates them for the service from this field.
+
+> Use the Domains field, **not** a `SERVICE_FQDN_*` variable. Those are only for Coolify's auto-generated wildcard
+> subdomains; combined with a custom domain they produce a duplicate domain and a second TLS certificate.
 
 ### Database
 
