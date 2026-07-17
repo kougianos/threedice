@@ -1,0 +1,31 @@
+# Coolify deployment for the Go service (the flavour running in production).
+#
+# This is NOT the local-development stack — that lives at ../docker-compose.yml
+# in the repository root and also runs PostgreSQL and the Spring service. This
+# file builds and runs only the Go binary and talks to an external,
+# Coolify-managed PostgreSQL via DATABASE_URL.
+#
+# Coolify — Build Pack: Docker Compose
+#   Base Directory:          /go
+#   Docker Compose Location: /docker-compose.yml
+#
+# The service key below ("threedice-go") is what Coolify names the container and
+# image after, so the service shows up as "threedice-go" on Beszel instead of a
+# random UUID. Enable Configuration > Advanced > "Consistent Container Names" to
+# also drop the trailing UUID and get exactly "threedice-go".
+services:
+  threedice-go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: threedice-go:latest
+    restart: unless-stopped
+    environment:
+      # Coolify routes the service's domain to port 8081. Set this variable to
+      # your own URL in the Coolify UI to use a custom domain.
+      - SERVICE_FQDN_THREEDICE-GO_8081
+      - PORT=8081
+      - DATABASE_URL=${DATABASE_URL}
+      - INITIAL_BALANCE=${INITIAL_BALANCE:-1000.00}
+    expose:
+      - "8081"
