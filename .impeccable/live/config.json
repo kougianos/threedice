@@ -1,0 +1,9 @@
+{
+  "files": [
+    "go/web/static/index.html",
+    "spring-boot/src/main/resources/static/index.html"
+  ],
+  "insertBefore": "</body>",
+  "commentSyntax": "html",
+  "cspChecked": true
+}
