@@ -18,18 +18,18 @@ services:
       timeout: 5s
       retries: 10
 
-  spring-boot:
-    build: ./spring-boot
-    container_name: threedice-spring
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/threedice
-      SPRING_DATASOURCE_USERNAME: threedice
-      SPRING_DATASOURCE_PASSWORD: threedice
-    ports:
-      - "8080:8080"
+  # spring-boot:
+  #   build: ./spring-boot
+  #   container_name: threedice-spring
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/threedice
+  #     SPRING_DATASOURCE_USERNAME: threedice
+  #     SPRING_DATASOURCE_PASSWORD: threedice
+  #   ports:
+  #     - "8080:8080"
 
   go:
     build: ./go

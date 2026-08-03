@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-03T00:00:00.000Z",
+  "generatedAt": "2026-08-03T11:20:00.000Z",
   "title": "Design System: ThreeDice",
   "extensions": {
     "colorMeta": {
@@ -32,6 +32,21 @@
           "oklch(73% 0.15 285)",
           "oklch(83% 0.10 285)",
           "oklch(93% 0.04 285)"
+        ]
+      },
+      "iris-text": {
+        "role": "primary",
+        "displayName": "Iris Text",
+        "canonical": "#8f83f4",
+        "tonalRamp": [
+          "oklch(15% 0.08 285)",
+          "oklch(26% 0.13 285)",
+          "oklch(37% 0.17 285)",
+          "oklch(48% 0.19 285)",
+          "oklch(66% 0.18 285)",
+          "oklch(76% 0.14 285)",
+          "oklch(85% 0.09 285)",
+          "oklch(94% 0.04 285)"
         ]
       },
       "lucky-gold": {
@@ -77,6 +92,21 @@
           "oklch(67% 0.13 38)",
           "oklch(81% 0.10 38)",
           "oklch(92% 0.05 38)"
+        ]
+      },
+      "clay-text": {
+        "role": "tertiary",
+        "displayName": "Clay Text",
+        "canonical": "#e8846b",
+        "tonalRamp": [
+          "oklch(15% 0.04 38)",
+          "oklch(26% 0.06 38)",
+          "oklch(37% 0.09 38)",
+          "oklch(48% 0.11 38)",
+          "oklch(62% 0.13 38)",
+          "oklch(72% 0.12 38)",
+          "oklch(84% 0.09 38)",
+          "oklch(93% 0.04 38)"
         ]
       },
       "midnight-slate": {
@@ -169,6 +199,21 @@
           "#e4e6eb"
         ]
       },
+      "fog-bright": {
+        "role": "neutral",
+        "displayName": "Fog Bright",
+        "canonical": "#a8acc0",
+        "tonalRamp": [
+          "#0f1117",
+          "#1a1d27",
+          "#22263a",
+          "#2a2e3e",
+          "#3d4256",
+          "#5f6478",
+          "#a8acc0",
+          "#e4e6eb"
+        ]
+      },
       "on-iris": {
         "role": "neutral",
         "displayName": "On Iris",
@@ -186,26 +231,19 @@
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display",
-        "purpose": "The product value of a roll, in Lucky Gold. The largest and heaviest type in the interface. Die numerals sit just under it at 700 / 1.8rem in the same gold."
-      },
-      "headline": {
-        "displayName": "Headline",
-        "purpose": "The wordmark only, filled with a 135 degree Iris-to-Gold gradient clipped to the text."
-      },
-      "title": {
-        "displayName": "Title",
-        "purpose": "Card headings. Small enough that a card reads as a panel rather than a page section."
-      },
-      "body": {
-        "displayName": "Body",
-        "purpose": "The default, and the input value size, so a typed stake matches the surrounding text weight exactly."
-      },
-      "label": {
-        "displayName": "Label",
-        "purpose": "Table column headers, uppercased and tracked. Field labels use the same family at 0.85rem in Fog, sentence case."
-      }
+      "display": { "displayName": "Display", "purpose": "The product value of a roll, in Lucky Gold. The largest and heaviest type in the system." },
+      "numeral": { "displayName": "Numeral", "purpose": "The three die faces, in the same gold, one step below the product they make." },
+      "headline": { "displayName": "Headline", "purpose": "The wordmark, filled with a 135 degree Iris-to-Gold gradient clipped to the text." },
+      "verdict": { "displayName": "Verdict", "purpose": "The won/lost pill. The multiply and equals operators share the size at 600 in Fog." },
+      "headline-compact": { "displayName": "Headline Compact", "purpose": "The wordmark under 600px." },
+      "title": { "displayName": "Title", "purpose": "Card headings. Small enough that a card reads as a panel rather than a page section." },
+      "body": { "displayName": "Body", "purpose": "The default, and the input value size, so a typed stake matches the surrounding text exactly." },
+      "control": { "displayName": "Control", "purpose": "Tab labels." },
+      "cell": { "displayName": "Cell", "purpose": "Table cells, the player name, and the value inside a quick pick at 600." },
+      "label": { "displayName": "Label", "purpose": "Field labels and the odds legend. Sentence case, not uppercased." },
+      "label-caps": { "displayName": "Label Caps", "purpose": "Table column headers, uppercased and tracked. Quick stakes, badges and field errors share the size without the uppercasing." },
+      "caption": { "displayName": "Caption", "purpose": "The prediction echo under the product, and the row labels the history table grows on mobile." },
+      "micro": { "displayName": "Micro", "purpose": "The probability and payout line inside a quick pick. The floor; nothing goes smaller." }
     },
     "shadows": [
       {
@@ -221,41 +259,44 @@
       {
         "name": "focus-ring",
         "value": "0 0 0 3px rgba(108, 92, 231, 0.2)",
-        "purpose": "Inputs on focus, with the border shifting to Iris at the same time."
+        "purpose": "Atmosphere on a focused input at 1.23:1. Never the indicator; the 2px Iris Text outline is."
       },
       {
-        "name": "toast-float",
+        "name": "shadow-float",
         "value": "0 4px 20px rgba(0, 0, 0, 0.4)",
-        "purpose": "The one genuinely floating element, slightly heavier than a card."
+        "purpose": "The toast, the one genuinely floating element, slightly heavier than a card."
       }
     ],
     "motion": [
       {
         "name": "state",
-        "value": "all 0.2s",
+        "value": "0.2s",
         "purpose": "Every pointer response: hover, focus, border and background shifts, the 1px lift."
       },
       {
         "name": "roll",
         "value": "roll 0.4s ease-in-out",
-        "purpose": "Die tiles on every result. Full 360 degree Y rotation with the scale dipping to 0.8 at the halfway point; values swap in at 200ms so numbers change mid-flip."
+        "purpose": "Die tiles on every result. Full 360 degree Y rotation with the scale dipping to 0.8 at the halfway point; dice, product, prediction caption and verdict all land together at 200ms, mid-flip."
       },
       {
-        "name": "balance-pop",
-        "value": "transform 0.2s, scale(1.1) held 300ms",
-        "purpose": "The balance pill confirming that money moved."
+        "name": "balance-mark",
+        "value": "transform 0.2s, background-color 0.2s, held 400ms",
+        "purpose": "The balance marking direction: Teal with a 1.1 scale on a credit, a 0.97 settle on a debit."
       },
       {
         "name": "toast-slide",
         "value": "transform 0.3s ease",
-        "purpose": "Toast entering from 100px below and leaving the same way after a 3 second hold."
+        "purpose": "Toast entering from 100px below and leaving the same way after an 8 second hold or a dismiss."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "movement removed, state preserved",
+        "purpose": "Under prefers-reduced-motion the flip, the lifts and the balance scale are dropped while the dice still change, the balance still marks direction in colour, and the toast still arrives on opacity."
       }
     ],
     "breakpoints": [
-      {
-        "name": "compact",
-        "value": "600px"
-      }
+      { "name": "compact", "value": "600px" },
+      { "name": "coarse-pointer", "value": "pointer: coarse" }
     ]
   },
   "components": [
@@ -264,32 +305,32 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "The roll action. Full width, one per card, the only element that visibly rises off the surface.",
-      "html": "<button class=\"ds-btn-primary\">Roll the Dice!</button>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem 2rem; border: none; border-radius: 8px; background: var(--primary, #6c5ce7); color: #fff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; } .ds-btn-primary:hover:not(:disabled) { background: var(--primary-hover, #7f70f0); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2); } .ds-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }"
+      "html": "<button class=\"ds-btn-primary\">Roll the Dice</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem 2rem; border: none; border-radius: 8px; background: var(--primary, #6c5ce7); color: #fff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s; } .ds-btn-primary:hover:not(:disabled) { background: var(--primary-hover, #7f70f0); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4); } .ds-btn-primary:focus-visible { outline: 2px solid var(--primary-text, #8f83f4); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }"
     },
     {
       "name": "Quick Pick",
       "kind": "chip",
       "refersTo": "button-quick-pick",
-      "description": "A popular predicted product with its real win probability underneath. Shown at rest, selected, and in the best-odds variant that wears Gold.",
-      "html": "<div class=\"ds-picks\"><button class=\"ds-pick\">6 <small>4.2%</small></button><button class=\"ds-pick ds-pick--best\">12 <small>6.9%⭐</small></button><button class=\"ds-pick ds-pick--active\">24 <small>5.6%</small></button></div>",
-      "css": ".ds-picks { display: flex; gap: 0.4rem; flex-wrap: wrap; } .ds-pick { display: flex; flex-direction: column; align-items: center; min-width: 52px; padding: 0.4rem 0.7rem; border: 1px solid var(--border, #2a2e3e); border-radius: 8px; background: var(--bg, #0f1117); color: var(--text, #e4e6eb); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.9rem; font-weight: 600; line-height: 1.2; cursor: pointer; transition: all 0.2s; } .ds-pick small { font-size: 0.65rem; font-weight: 400; color: var(--text-muted, #8b8fa3); } .ds-pick:hover { border-color: var(--primary, #6c5ce7); background: var(--surface-hover, #22263a); transform: translateY(-1px); } .ds-pick:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2); } .ds-pick--active { border-color: var(--primary, #6c5ce7); background: rgba(108, 92, 231, 0.2); color: #fff; } .ds-pick--best { border-color: var(--accent, #ffd32a); background: rgba(255, 211, 42, 0.08); } .ds-pick--best:hover { border-color: var(--accent, #ffd32a); background: rgba(255, 211, 42, 0.2); }"
+      "description": "A predicted product with its real win probability and payout, both counted at runtime from the 216 ordered rolls. Shown at rest, selected, and in the best-return variant. 12 and 24 tie exactly, so best is a pair.",
+      "html": "<div class=\"ds-picks\"><button class=\"ds-pick\" aria-pressed=\"false\" aria-label=\"Predict 6. 4.2 percent chance, pays 2x\"><span class=\"ds-pick-value\">6</span><span class=\"ds-pick-meta\">4.2% &middot; 2x</span></button><button class=\"ds-pick ds-pick--best\" aria-pressed=\"true\" aria-label=\"Predict 12. 6.9 percent chance, pays 5x, the best return on offer here\"><span class=\"ds-pick-value\">12</span><span class=\"ds-pick-meta\">6.9% &middot; 5x</span></button><button class=\"ds-pick ds-pick--best\" aria-pressed=\"false\" aria-label=\"Predict 24. 6.9 percent chance, pays 5x, the best return on offer here\"><span class=\"ds-pick-value\">24</span><span class=\"ds-pick-meta\">6.9% &middot; 5x</span></button></div>",
+      "css": ".ds-picks { display: flex; gap: 0.4rem; flex-wrap: wrap; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-pick { display: flex; flex-direction: column; align-items: center; min-width: 62px; padding: 0.4rem 0.7rem; border: 1px solid var(--border, #2a2e3e); border-radius: 8px; background: var(--bg, #0f1117); color: var(--text, #e4e6eb); font-family: inherit; line-height: 1.2; cursor: pointer; transition: border-color 0.2s, background-color 0.2s, transform 0.2s; } .ds-pick-value { font-size: 0.9rem; font-weight: 600; } .ds-pick-meta { font-size: 0.7rem; font-weight: 400; color: var(--text-on-tint, #a8acc0); font-variant-numeric: tabular-nums; } .ds-pick:hover { border-color: var(--primary, #6c5ce7); background: var(--surface-hover, #22263a); transform: translateY(-1px); } .ds-pick:focus-visible { outline: 2px solid var(--primary-text, #8f83f4); outline-offset: 2px; } .ds-pick[aria-pressed=\"true\"] { border-color: var(--primary, #6c5ce7); background: rgba(108, 92, 231, 0.2); color: #fff; } .ds-pick--best { border-color: var(--accent, #ffd32a); background: rgba(255, 211, 42, 0.08); } .ds-pick--best:hover, .ds-pick--best[aria-pressed=\"true\"] { border-color: var(--accent, #ffd32a); background: rgba(255, 211, 42, 0.2); }"
     },
     {
       "name": "Quick Stake",
       "kind": "button",
       "refersTo": "button-quick-stake",
-      "description": "Adds a fixed amount to the stake field. Teal because it puts money on the table, and tighter cornered than a pick so the two rows do not read alike.",
+      "description": "Adds a fixed amount to the stake field rather than setting it, so two taps build $260. Teal because it puts money on the table.",
       "html": "<div class=\"ds-stakes\"><button class=\"ds-stake\">+$10</button><button class=\"ds-stake\">+$100</button><button class=\"ds-stake\">+$250</button></div>",
-      "css": ".ds-stakes { display: flex; gap: 0.4rem; } .ds-stake { padding: 0.3rem 0.6rem; border: 1px solid var(--border, #2a2e3e); border-radius: 6px; background: var(--bg, #0f1117); color: var(--success, #00b894); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; } .ds-stake:hover { border-color: var(--success, #00b894); background: rgba(0, 184, 148, 0.1); transform: translateY(-1px); } .ds-stake:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.25); }"
+      "css": ".ds-stakes { display: flex; gap: 0.4rem; } .ds-stake { padding: 0.35rem 0.7rem; border: 1px solid var(--border, #2a2e3e); border-radius: 6px; background: var(--bg, #0f1117); color: var(--success, #00b894); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: border-color 0.2s, background-color 0.2s, transform 0.2s; } .ds-stake:hover { border-color: var(--success, #00b894); background: rgba(0, 184, 148, 0.1); transform: translateY(-1px); } .ds-stake:focus-visible { outline: 2px solid var(--primary-text, #8f83f4); outline-offset: 2px; }"
     },
     {
-      "name": "Text Input",
+      "name": "Text Field",
       "kind": "input",
       "refersTo": "input-field",
-      "description": "Stake and prediction fields. Filled with the page ground so the control reads as punched into the card.",
-      "html": "<div class=\"ds-field\"><label class=\"ds-field__label\" for=\"ds-stake-input\">Stake ($)</label><input class=\"ds-field__input\" id=\"ds-stake-input\" type=\"text\" inputmode=\"decimal\" value=\"10.00\"></div>",
-      "css": ".ds-field { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-field__label { display: block; margin-bottom: 0.3rem; font-size: 0.85rem; color: var(--text-muted, #8b8fa3); } .ds-field__input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--border, #2a2e3e); border-radius: 8px; background: var(--bg, #0f1117); color: var(--text, #e4e6eb); font-family: inherit; font-size: 1rem; transition: border-color 0.2s; } .ds-field__input:focus { outline: none; border-color: var(--primary, #6c5ce7); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2); }"
+      "description": "Filled with the page ground so the control reads as punched into the card. The constraint rides in the label, and errors answer beneath the field rather than in a toast.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field__label\" for=\"ds-pred\">Predicted product <span class=\"ds-field__note\">one of 40 possible</span></label><input class=\"ds-field__input\" id=\"ds-pred\" type=\"text\" inputmode=\"numeric\" value=\"13\" aria-invalid=\"true\" aria-describedby=\"ds-pred-err\"><p class=\"ds-field__error\" id=\"ds-pred-err\">Three dice cannot make 13. Try 12 or 15.</p></div>",
+      "css": ".ds-field { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-field__label { display: block; margin-bottom: 0.3rem; font-size: 0.85rem; color: var(--text, #e4e6eb); } .ds-field__note { color: var(--text-muted, #8b8fa3); font-weight: 400; } .ds-field__input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--border, #2a2e3e); border-radius: 8px; background: var(--bg, #0f1117); color: var(--text, #e4e6eb); font-family: inherit; font-size: 1rem; font-variant-numeric: tabular-nums; transition: border-color 0.2s; } .ds-field__input:focus { outline: none; border-color: var(--primary, #6c5ce7); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2); } .ds-field__input:focus-visible { outline: 2px solid var(--primary-text, #8f83f4); outline-offset: 2px; } .ds-field__input[aria-invalid=\"true\"] { border-color: var(--danger, #e17055); } .ds-field__error { margin-top: 0.35rem; font-size: 0.8rem; color: var(--danger-text, #e8846b); }"
     },
     {
       "name": "Card",
@@ -303,116 +344,86 @@
       "name": "Dice Equation",
       "kind": "custom",
       "refersTo": "die-tile",
-      "description": "The signature component. Three die tiles read as arithmetic across to the product, with the roll animation replayed on every result. Hover the tiles to see the roll.",
-      "html": "<div class=\"ds-equation\"><div class=\"ds-die\">1</div><span class=\"ds-op\">×</span><div class=\"ds-die\">3</div><span class=\"ds-op\">×</span><div class=\"ds-die\">4</div><span class=\"ds-op\">=</span><div class=\"ds-product\">12</div></div>",
-      "css": ".ds-equation { display: flex; align-items: center; justify-content: center; gap: 0.7rem; flex-wrap: wrap; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-die { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: var(--bg, #0f1117); border: 2px solid var(--border, #2a2e3e); border-radius: 12px; font-size: 1.8rem; font-weight: 700; color: var(--accent, #ffd32a); transition: transform 0.3s; } .ds-equation:hover .ds-die { animation: ds-roll 0.4s ease-in-out; } @keyframes ds-roll { 0% { transform: rotateY(0deg) scale(1); } 50% { transform: rotateY(180deg) scale(0.8); } 100% { transform: rotateY(360deg) scale(1); } } .ds-op { font-size: 1.3rem; font-weight: 600; color: var(--text-muted, #8b8fa3); } .ds-product { min-width: 60px; font-size: 2rem; font-weight: 800; color: var(--accent, #ffd32a); text-align: center; }"
+      "description": "The signature component, never hidden. It rests at ? x ? x ? = ? from first paint and carries the prediction under the product, so the comparison has both sides. Hover the row to replay the roll.",
+      "html": "<div class=\"ds-equation\"><div class=\"ds-die\">1</div><span class=\"ds-op\">&times;</span><div class=\"ds-die\">3</div><span class=\"ds-op\">&times;</span><div class=\"ds-die\">4</div><span class=\"ds-op\">=</span><div class=\"ds-product-group\"><div class=\"ds-product\">12</div><p class=\"ds-product-caption ds-matched\">you predicted 12</p></div></div>",
+      "css": ".ds-equation { display: flex; align-items: center; justify-content: center; gap: 0.7rem; flex-wrap: wrap; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-die { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: var(--bg, #0f1117); border: 2px solid var(--border, #2a2e3e); border-radius: 12px; font-size: 1.8rem; font-weight: 700; color: var(--accent, #ffd32a); font-variant-numeric: tabular-nums; } .ds-equation:hover .ds-die { animation: ds-roll 0.4s ease-in-out; } @keyframes ds-roll { 0% { transform: rotateY(0deg) scale(1); } 50% { transform: rotateY(180deg) scale(0.8); } 100% { transform: rotateY(360deg) scale(1); } } .ds-op { font-size: 1.3rem; font-weight: 600; color: var(--text-muted, #8b8fa3); } .ds-product-group { display: flex; flex-direction: column; align-items: center; min-width: 84px; } .ds-product { font-size: 2rem; font-weight: 800; line-height: 1.2; color: var(--accent, #ffd32a); font-variant-numeric: tabular-nums; } .ds-product-caption { font-size: 0.75rem; color: var(--text-muted, #8b8fa3); white-space: nowrap; } .ds-product-caption.ds-matched { color: var(--success, #00b894); font-weight: 600; } @media (prefers-reduced-motion: reduce) { .ds-equation:hover .ds-die { animation: none; } }"
     },
     {
       "name": "Balance Pill",
       "kind": "custom",
       "refersTo": "balance-pill",
-      "description": "The player's money, in the header. Scales to 1.1 for 300ms whenever the balance changes, which is how the system confirms a transaction.",
+      "description": "The player's money, in the header. It marks which way the balance moved: Teal and a 1.1 scale on a credit, a 0.97 settle on a debit. Hover to see the credit state.",
       "html": "<div class=\"ds-identity\"><span class=\"ds-identity__name\">player1</span><span class=\"ds-balance\">$583.00</span></div>",
-      "css": ".ds-identity { display: flex; align-items: center; gap: 1rem; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-identity__name { font-size: 0.9rem; color: var(--text-muted, #8b8fa3); } .ds-balance { min-width: 100px; padding: 0.4rem 1rem; border-radius: 20px; background: var(--primary, #6c5ce7); color: #fff; font-size: 1rem; font-weight: 700; text-align: center; transition: transform 0.2s; } .ds-identity:hover .ds-balance { transform: scale(1.1); }"
+      "css": ".ds-identity { display: flex; align-items: center; gap: 1rem; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-identity__name { font-size: 0.9rem; color: var(--text-muted, #8b8fa3); } .ds-balance { min-width: 110px; padding: 0.4rem 1rem; border-radius: 20px; background: var(--primary, #6c5ce7); color: #fff; font-size: 1rem; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; transition: transform 0.2s, background-color 0.2s; } .ds-identity:hover .ds-balance { transform: scale(1.1); background: var(--success, #00b894); } @media (prefers-reduced-motion: reduce) { .ds-identity:hover .ds-balance { transform: none; } }"
     },
     {
       "name": "Outcome Badge",
       "kind": "chip",
       "refersTo": "badge-won",
-      "description": "The won/lost and credit/debit pair. Always full-strength text on a 15% tint of its own color, never a solid fill.",
-      "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-badge--won\">WON</span><span class=\"ds-badge ds-badge--lost\">LOST</span><span class=\"ds-status ds-status--won\">🎉 WON!</span></div>",
-      "css": ".ds-badges { display: flex; align-items: center; gap: 1rem; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; } .ds-badge--won { background: rgba(0, 184, 148, 0.15); color: var(--success, #00b894); } .ds-badge--lost { background: rgba(225, 112, 85, 0.15); color: var(--danger, #e17055); } .ds-status { padding: 0.3rem 1.2rem; border-radius: 20px; font-size: 1.3rem; font-weight: 700; } .ds-status--won { background: rgba(0, 184, 148, 0.15); color: var(--success, #00b894); border: 1px solid var(--success, #00b894); }"
+      "description": "The won/lost and credit/debit pair. Full-strength text on a 15% tint of its own colour, never a solid fill. The loss variant uses Clay Text, since full Clay only reaches 4.35:1 on its own tint.",
+      "html": "<div class=\"ds-badges\"><span class=\"ds-badge ds-badge--won\">WON</span><span class=\"ds-badge ds-badge--lost\">LOST</span><span class=\"ds-status ds-status--won\">WON</span></div>",
+      "css": ".ds-badges { display: flex; align-items: center; gap: 1rem; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; } .ds-badge--won { background: rgba(0, 184, 148, 0.15); color: var(--success, #00b894); } .ds-badge--lost { background: rgba(225, 112, 85, 0.15); color: var(--danger-text, #e8846b); } .ds-status { padding: 0.3rem 1.2rem; border-radius: 20px; font-size: 1.3rem; font-weight: 700; } .ds-status--won { background: rgba(0, 184, 148, 0.15); color: var(--success, #00b894); border: 1px solid var(--success, #00b894); }"
     },
     {
       "name": "History Tabs",
       "kind": "nav",
       "refersTo": "tab-active",
-      "description": "Local navigation inside the history card. Text only, on a hairline rule, with a 2px Iris underline marking the active tab.",
-      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab--active\">Bet History</button><button class=\"ds-tab\">Transactions</button></div>",
-      "css": ".ds-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border, #2a2e3e); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-tab { padding: 0.7rem 1.5rem; border: none; border-bottom: 2px solid transparent; background: none; color: var(--text-muted, #8b8fa3); font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; } .ds-tab:hover { color: var(--text, #e4e6eb); } .ds-tab:focus-visible { outline: none; color: var(--text, #e4e6eb); box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2); } .ds-tab--active { color: var(--primary, #6c5ce7); border-bottom-color: var(--primary, #6c5ce7); }"
+      "description": "Local navigation inside the history card. A real tab pattern: roving tabindex, aria-selected, arrow keys, one tab stop for the group.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\" aria-label=\"History views\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Bets</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">Transactions</button></div>",
+      "css": ".ds-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border, #2a2e3e); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; } .ds-tab { padding: 0.7rem 1.5rem; border: none; border-bottom: 2px solid transparent; background: none; color: var(--text-muted, #8b8fa3); font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: color 0.2s, border-color 0.2s; } .ds-tab:hover { color: var(--text, #e4e6eb); } .ds-tab:focus-visible { outline: 2px solid var(--primary-text, #8f83f4); outline-offset: 2px; } .ds-tab[aria-selected=\"true\"] { color: var(--primary-text, #8f83f4); border-bottom-color: var(--primary, #6c5ce7); }"
+    },
+    {
+      "name": "Error Toast",
+      "kind": "custom",
+      "refersTo": "toast-error",
+      "description": "Server and network failures only; validation answers at the field. Carries role=alert, a dismiss control and an 8 second hold rather than a 3 second expiry.",
+      "html": "<div class=\"ds-toast\" role=\"alert\"><span>The bet could not be placed. Check your connection and try again.</span><button class=\"ds-toast-dismiss\" type=\"button\" aria-label=\"Dismiss this message\">&times;</button></div>",
+      "css": ".ds-toast { display: inline-flex; align-items: center; gap: 0.75rem; max-width: 30rem; background: var(--danger, #e17055); color: #fff; padding: 0.8rem 0.8rem 0.8rem 1.5rem; border-radius: 8px; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; font-size: 0.9rem; font-weight: 500; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); } .ds-toast-dismiss { flex: none; width: 28px; height: 28px; border: none; border-radius: 6px; background: none; color: #fff; font-family: inherit; font-size: 1rem; line-height: 1; cursor: pointer; opacity: 0.75; transition: opacity 0.2s; } .ds-toast-dismiss:hover { opacity: 1; } .ds-toast-dismiss:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }"
     }
   ],
   "narrative": {
     "northStar": "The Quiet Casino Terminal",
-    "overview": "The room is dark and the instruments are on. Surfaces are Midnight Slate and its two lighter siblings, hairline borders separate everything, and the type is the operating system's own UI face at rest. Then three dice land in Lucky Gold and the terminal admits, briefly, that it is a casino. That contrast is the whole system: a composed readout that keeps one warm light burning over the table.\n\nIt is precise and composed first. Values are exact, the rhythm repeats, controls answer in two tenths of a second with a single pixel of lift, and nothing is approximate. But it is not solemn. The wordmark carries a die, results land with an emoji, the best-odds pick wears a star, and the quick picks tell you your real chance of winning before you spend anything. The system knows it is a dice game and is willing to say so, as long as it says so in the same measured voice it uses for the ledger.\n\nDepth is tonal, never dramatic. The palette is disciplined about meaning: violet is the only color that acts, gold is the only color that rolls, and teal and clay only ever report an outcome. Confirmed rejections: this system does not become neon slot-machine chrome (gradient bevels, glow spam, confetti, coin shine), and it does not become a crypto trading terminal (tickers, sparklines, wall-to-wall red and green, manufactured urgency).",
+    "overview": "The room is dark and the instruments are on. Surfaces are Midnight Slate and its two lighter siblings, hairline borders separate everything, and the type is the operating system's own UI face at rest. Then three dice land in Lucky Gold and the terminal admits, briefly, that it is a casino. That contrast is the whole system: a composed readout that keeps one warm light burning over the table.\n\nIt is precise and composed first. Values are exact, the rhythm repeats, controls answer in two tenths of a second with a single pixel of lift, and nothing is approximate. But it is not solemn. The wordmark carries a drawn die, the dice rest at ? x ? x ? = ? before you have bet anything, and the quick picks tell you your real chance of winning and what it pays before you spend a cent. The system knows it is a dice game and is willing to say so, as long as it says so in the same measured voice it uses for the ledger. The wit is in the arithmetic, not in borrowed glyphs: no emoji stands in for an icon, and no star stands in for a number.\n\nDepth is tonal, never dramatic. The palette is disciplined about meaning: violet is the only color that acts, gold is the only color that rolls, and teal and clay only ever report an outcome. Confirmed rejections: this system does not become neon slot-machine chrome (gradient bevels, glow spam, confetti, coin shine), and it does not become a crypto trading terminal (tickers, sparklines, wall-to-wall red and green, manufactured urgency).",
     "keyCharacteristics": [
-      "One 900px column of stacked cards on a Midnight Slate ground, with a single breakpoint at 600px.",
+      "One 900px column of stacked cards on a Midnight Slate ground, with a single width breakpoint at 600px and one input breakpoint at pointer: coarse.",
       "A three-step tonal ramp does all structural depth work; the one card shadow is atmosphere.",
       "Controls are punched into the card, not raised off it. Only the primary action rises.",
-      "Gold has exactly three homes, all of them the game itself.",
-      "Zero font requests. Zero image requests. The only artwork is a 5-pip SVG favicon.",
-      "Every state change is 0.2s, with a 1px lift and a colored glow on the primary action."
+      "Gold has exactly four homes: three in the game, one in the identity that quotes it.",
+      "Zero font requests. Zero image requests. The only artwork is one drawn 5-pip die, used as both favicon and mark.",
+      "Every state change is 0.2s, with a 1px lift and a colored glow on the primary action.",
+      "The equation is never hidden. It rests at ? x ? x ? = ? and carries the prediction under the product, so the comparison always has both sides.",
+      "Every number the interface states about odds is counted at runtime, never transcribed."
     ],
     "rules": [
-      {
-        "name": "The Iris Means Action Rule",
-        "body": "Violet marks what the visitor can do and who they are. If an element is not actionable, not focused, and not the balance, it does not get Iris.",
-        "section": "colors"
-      },
-      {
-        "name": "The Gold Only Rolls Rule",
-        "body": "Lucky Gold has three homes: the numerals of a roll, the product they make, and the pick marked best. Adding a fourth costs the first three their meaning.",
-        "section": "colors"
-      },
-      {
-        "name": "The Outcome Pair Rule",
-        "body": "Teal and Clay report results and nothing else. They never become brand colors, never decorate, and never appear on an element whose meaning is not won/lost or credit/debit.",
-        "section": "colors"
-      },
-      {
-        "name": "The Zero-Request Type Rule",
-        "body": "The system loads no font files. Type costs nothing at first paint today, and a webfont is a trade to argue for rather than a default to reach for.",
-        "section": "typography"
-      },
-      {
-        "name": "The Weight Before Size Rule",
-        "body": "Emphasis is bought with weight (600, 700, 800) before it is bought with size. Only the roll result is allowed to be both.",
-        "section": "typography"
-      },
-      {
-        "name": "The Single Column Rule",
-        "body": "Everything below the header is one column of cards at one measure. The bet row is the only place the system nests a grid, and it collapses at the single breakpoint.",
-        "section": "layout"
-      },
-      {
-        "name": "The Tone Ramp Rule",
-        "body": "Structural depth comes from Midnight, Surface and Raised. Shadow never ranks importance and never gets heavier to make something matter more.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Inset Control Rule",
-        "body": "Anything that accepts input recedes to Midnight Slate with a Slate Line border. Only the primary action rises off the surface, and it rises in Iris.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Shared Corner Rule",
-        "body": "Cards and dice both take 12px, so a rolled die reads as a small card rather than a foreign object dropped into the layout.",
-        "section": "shapes"
-      },
-      {
-        "name": "The Pill Means Status Rule",
-        "body": "The 20px pill is reserved for things that report a live value: the balance and the won/lost verdict. Actions never wear it.",
-        "section": "shapes"
-      },
-      {
-        "name": "The Two-Tenths Rule",
-        "body": "Every state change runs 0.2s. Only events are allowed longer: the roll at 0.4s, the toast at 0.3s, the balance pop at 300ms. If it responds to a pointer, it is 0.2s.",
-        "section": "components"
-      },
-      {
-        "name": "The One Loud Thing Rule",
-        "body": "Each card gets at most one element at full saturation: the Iris button in the bet card, the Gold product in the result card, the badges in the history. Everything else in that card is neutral.",
-        "section": "components"
-      }
+      { "name": "The Iris Means Action Rule", "body": "Violet marks what the visitor can do and who they are. If an element is not actionable, not focused, and not the balance, it does not get Iris.", "section": "colors" },
+      { "name": "The Gold Only Rolls Rule", "body": "Lucky Gold has four homes and no more: the numerals of a roll, the product they make, the picks marked best, and the far end of the wordmark gradient. The first three are the game itself; the fourth is the identity quoting it. Adding a fifth costs the rest their meaning.", "section": "colors" },
+      { "name": "The Outcome Pair Rule", "body": "Teal and Clay report results and nothing else. They never become brand colors, never decorate, and never appear on an element whose meaning is not won/lost or credit/debit.", "section": "colors" },
+      { "name": "The Zero-Request Type Rule", "body": "The system loads no font files. Type costs nothing at first paint today, and a webfont is a trade to argue for rather than a default to reach for.", "section": "typography" },
+      { "name": "The Weight Before Size Rule", "body": "Emphasis is bought with weight (600, 700, 800) before it is bought with size. Only the roll result is allowed to be both.", "section": "typography" },
+      { "name": "The Single Column Rule", "body": "Everything below the header is one column of cards at one measure. The bet row is the only place the system nests a grid, and it collapses at the single breakpoint.", "section": "layout" },
+      { "name": "The Tone Ramp Rule", "body": "Structural depth comes from Midnight, Surface and Raised. Shadow never ranks importance and never gets heavier to make something matter more.", "section": "elevation" },
+      { "name": "The Inset Control Rule", "body": "Anything that accepts input recedes to Midnight Slate with a Slate Line border. Only the primary action rises off the surface, and it rises in Iris.", "section": "elevation" },
+      { "name": "The Shared Corner Rule", "body": "Cards and dice both take 12px, so a rolled die reads as a small card rather than a foreign object dropped into the layout.", "section": "shapes" },
+      { "name": "The Pill Means Status Rule", "body": "The 20px pill is reserved for things that report a live value: the balance and the won/lost verdict. Actions never wear it.", "section": "shapes" },
+      { "name": "The Two-Tenths Rule", "body": "Every state change runs 0.2s. Only events are allowed longer: the roll at 0.4s, the toast at 0.3s, the balance mark at 400ms. If it responds to a pointer, it is 0.2s.", "section": "components" },
+      { "name": "The One Loud Thing Rule", "body": "Each card gets at most one element at full saturation: the Iris button in the bet card, the Gold product in the result card, the badges in the history. Everything else in that card is neutral. The odds legend is the standing test: it sits above the button in neutral badges precisely because a second solid-Iris element in that card read as a second submit.", "section": "components" },
+      { "name": "The Nothing Precedes The Dice Rule", "body": "No part of an outcome may appear before the dice that produce it. The verdict, the winnings, the matched caption and the balance all wait for the same frame. A result on screen always belongs to the bet the visitor is currently looking at, or the card is showing ?.", "section": "components" },
+      { "name": "The Numbers Are Counted Rule", "body": "Any probability, payout or count the interface states is derived at runtime from the 216 ordered rolls, never transcribed into markup. Four of the eight quick picks once carried hand-written percentages and four of them were wrong, one by a factor of two. A number the code cannot recompute is a number the interface is not entitled to claim.", "section": "components" },
+      { "name": "The Direction Is The Feedback Rule", "body": "The balance marks which way it moved: Teal and a 1.1 scale on a credit, a 0.97 settle on a debit. One gesture for both is a celebration attached to a loss.", "section": "components" }
     ],
     "dos": [
-      "Do keep Lucky Gold on the game. Its three homes are the die numerals, the product, and the best-odds pick.",
+      "Do keep Lucky Gold on the game. Its four homes are the die numerals, the product, the best-odds picks, and the far end of the wordmark gradient.",
       "Do recess controls into Midnight Slate with a 1px Slate Line border, and let only the primary action rise.",
       "Do answer every pointer in 0.2s with a 1px lift. Crisp, with a spring in it.",
       "Do hold the 900px single column and let the one 600px breakpoint collapse the bet row and shrink the dice.",
       "Do reserve Teal and Clay for won/lost and credit/debit, always as a 15% tint under full-strength text.",
-      "Do pair every quick pick with its real win probability. Telling the visitor their odds is part of the voice.",
-      "Do keep type on the system stack unless a webfont earns the request it costs."
+      "Do pair every quick pick with its real win probability and payout, both counted at runtime. Telling the visitor their odds is part of the voice; telling them wrongly is worse than silence.",
+      "Do keep type on the system stack unless a webfont earns the request it costs.",
+      "Do answer validation at the field that caused it, and keep the toast for failures the client cannot predict.",
+      "Do give every focusable element the same Iris Text outline at 2px with a 2px offset.",
+      "Do announce the outcome of a roll in the live region: rolled, product, predicted, paid, new balance.",
+      "Do set every comparable number in tabular figures, right-aligned in tables.",
+      "Do state a field's constraint in its label, before the visitor can break it."
     ],
     "donts": [
       "Don't drift into neon slot-machine chrome: no gradient bevels, glow spam, confetti, sparkles, or coin shine on the gold.",
@@ -421,7 +432,13 @@
       "Don't give Iris a second job. It means action, focus and identity, never decoration.",
       "Don't put two full-saturation elements in one card.",
       "Don't introduce a second colored shadow. The Iris action glow is the only one.",
-      "Don't use the 20px pill for anything actionable; it belongs to live values."
+      "Don't use the 20px pill for anything actionable; it belongs to live values.",
+      "Don't write a probability, payout or count into markup by hand. Count it.",
+      "Don't show any part of a result before the dice land, or leave a previous result on screen during a roll.",
+      "Don't let a table push the document sideways. Wrap it, or collapse it to records.",
+      "Don't identify a row by its position in the list. Use the id the service returned.",
+      "Don't put a raw API field name in front of a visitor.",
+      "Don't kill motion wholesale under prefers-reduced-motion. Remove the movement, keep the state change: the dice still turn over, the balance still marks its direction in colour, the toast still arrives."
     ]
   }
 }
